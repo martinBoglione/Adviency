@@ -1,0 +1,51 @@
+/* Estilo y centar la box */
+.style {
+  background-color: white;
+  border: 3px solid green;
+  padding: 10px;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/* End of box */
+
+@font-face {
+  font-family: myFirstFont;
+  src: url(/Mountains_of_Christmas/MountainsofChristmas-Regular.ttf);
+}
+
+.titulo {
+  font-family: myFirstFont;
+  text-align: center;
+}
+
+.lista {
+  padding-right: 40px;
+}
+
+.container-lista {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.button {
+  margin-left: 5px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+html {
+  background-image: url("/Imagenes/navidad2.jpg");
+  background-size: cover;
+}
+
+.icon {
+  cursor: pointer;
+}
