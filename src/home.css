@@ -35,10 +35,20 @@
   justify-content: space-between;
 }
 
-.button {
+.add-button {
   margin-left: 5px;
   margin-bottom: 4px;
   cursor: pointer;
+}
+
+.container-delete-button {
+  display: flex;
+  justify-content: center;
+}
+
+.container-delete-button button {
+  display: block;
+  width: 100%;
 }
 
 html {

@@ -32,6 +32,11 @@ const Home = () => {
 
     setItems(newList);
   };
+
+  const deleteAll = () => {
+    setItems([]);
+  };
+
   return (
     <div className="style center">
       <div className="titulo">
@@ -43,7 +48,10 @@ const Home = () => {
           onChange={handleChange}
           placeholder="Agregá un item..."
         />
-        <button class="btn btn-danger btn-sm button" onClick={handleAdd}>
+        <button
+          class="btn btn-success btn-sm button add-button"
+          onClick={handleAdd}
+        >
           {" "}
           Agregar{" "}
         </button>
@@ -63,6 +71,11 @@ const Home = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="container-delete-button">
+        <button class="btn btn-danger btn-block" onClick={deleteAll}>
+          Borar todo
+        </button>
       </div>
     </div>
   );
