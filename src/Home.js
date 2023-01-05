@@ -72,8 +72,11 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <div className="container-delete-button">
-        <button class="btn btn-danger btn-block" onClick={deleteAll}>
+      <div>
+        <button
+          class="btn btn-danger btn-block delete-button"
+          onClick={deleteAll}
+        >
           Borar todo
         </button>
       </div>

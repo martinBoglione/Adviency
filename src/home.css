@@ -41,12 +41,7 @@
   cursor: pointer;
 }
 
-.container-delete-button {
-  display: flex;
-  justify-content: center;
-}
-
-.container-delete-button button {
+.delete-button {
   display: block;
   width: 100%;
 }
