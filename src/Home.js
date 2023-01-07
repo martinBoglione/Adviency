@@ -9,6 +9,7 @@ const Home = () => {
     { id: 2, itemName: "Caramelos" },
     { id: 3, itemName: "Vitel Tone" },
   ]);
+  console.log(items.length);
   const [name, setName] = useState("");
 
   const handleChange = (event) => {
@@ -29,7 +30,6 @@ const Home = () => {
 
   const handleDelete = (id) => {
     const newList = items.filter((l) => l.id !== id);
-
     setItems(newList);
   };
 
@@ -57,20 +57,24 @@ const Home = () => {
         </button>
       </div>
       <div className="lista">
-        {items.map((item) => (
-          <div class="container-lista">
-            <ul>
-              <li>{item.itemName}</li>
-            </ul>
-            <div className="icon">
-              <FontAwesomeIcon
-                icon={faXmark}
-                color="red"
-                onClick={() => handleDelete(item.id)}
-              ></FontAwesomeIcon>
-            </div>
-          </div>
-        ))}
+        {items.length === 0 ? (
+          <p>¡No hay regalos, Grinch!</p>
+        ) : (
+          <ul>
+            {items.map((item) => (
+              <div class="container-lista">
+                <li key={item.id}>{item.itemName}</li>
+                <div className="icon">
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    color="red"
+                    onClick={() => handleDelete(item.id)}
+                  ></FontAwesomeIcon>
+                </div>
+              </div>
+            ))}
+          </ul>
+        )}
       </div>
       <div>
         <button

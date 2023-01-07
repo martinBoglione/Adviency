@@ -29,6 +29,14 @@
   padding-right: 40px;
 }
 
+.lista p {
+  display: flex;
+  justify-content: center;
+  color: rgb(99, 97, 97);
+  font-style: italic;
+  font-weight: 200;
+}
+
 .container-lista {
   display: flex;
   flex-direction: row;
