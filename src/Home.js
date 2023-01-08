@@ -9,14 +9,25 @@ const Home = () => {
     { id: 2, itemName: "Caramelos" },
     { id: 3, itemName: "Vitel Tone" },
   ]);
-  console.log(items.length);
+
   const [name, setName] = useState("");
+  const enable = name.length > 0;
+  const [error, setError] = useState(null);
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    setName(event.target.value.trim()); //Trim evita que se pueda agregar un regalo en blanco
   };
 
   const handleAdd = () => {
+    const existingItem = items.find(
+      (item) => item.itemName.toLowerCase() === name.toLowerCase()
+    );
+    if (existingItem) {
+      console.log("alalal");
+      setError("¡Este regalo ya esta en la lista!");
+      return;
+    }
+
     const newItem = {
       id: items.length + 1,
       itemName: name,
@@ -26,6 +37,7 @@ const Home = () => {
 
     setItems(newItems);
     setName("");
+    setError(null);
   };
 
   const handleDelete = (id) => {
@@ -35,6 +47,8 @@ const Home = () => {
 
   const deleteAll = () => {
     setItems([]);
+    setName("");
+    setError(null);
   };
 
   return (
@@ -49,14 +63,15 @@ const Home = () => {
           placeholder="Agregá un item..."
         />
         <button
+          disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
           class="btn btn-success btn-sm button add-button"
           onClick={handleAdd}
         >
-          {" "}
-          Agregar{" "}
+          Agregar
         </button>
       </div>
       <div className="lista">
+        {/* Si la lista de items es igual a cero entonces aparece el siguente mensaje */}
         {items.length === 0 ? (
           <p>¡No hay regalos, Grinch!</p>
         ) : (
@@ -76,6 +91,11 @@ const Home = () => {
           </ul>
         )}
       </div>
+      {/* Mensaje de error si un regalo ya existe */}
+      <div className="error">
+        <p>{error}</p>
+      </div>
+
       <div>
         <button
           class="btn btn-danger btn-block delete-button"
