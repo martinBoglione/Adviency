@@ -1,8 +1,12 @@
 /* Estilo y centar la box */
 .style {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: white;
   border: 3px solid green;
   padding: 10px;
+  min-width: 20em;
 }
 
 .center {
@@ -20,13 +24,18 @@
   src: url(/Mountains_of_Christmas/MountainsofChristmas-Regular.ttf);
 }
 
+html {
+  background-image: url("/Imagenes/navidad2.jpg");
+  background-size: cover;
+}
+
 .titulo {
   font-family: myFirstFont;
   text-align: center;
 }
 
 .lista {
-  padding-right: 40px;
+  padding-right: 1em;
 }
 
 .lista p {
@@ -44,19 +53,12 @@
 }
 
 .add-button {
-  margin-left: 5px;
-  margin-bottom: 4px;
   cursor: pointer;
 }
 
 .delete-button {
-  display: block;
+  display: flex;
   width: 100%;
-}
-
-html {
-  background-image: url("/Imagenes/navidad2.jpg");
-  background-size: cover;
 }
 
 .icon {
@@ -71,4 +73,18 @@ html {
 .error p {
   font-weight: bold;
   color: red;
+}
+
+.inputs-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-cantidad {
+  width: 3em;
+}
+
+.input-regalo {
+  width: 10em;
 }

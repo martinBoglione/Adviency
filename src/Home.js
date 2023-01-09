@@ -5,12 +5,13 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [items, setItems] = useState([
-    { id: 1, itemName: "Media" },
-    { id: 2, itemName: "Caramelos" },
-    { id: 3, itemName: "Vitel Tone" },
+    { id: 1, itemName: "Media", itemCantidad: 1 },
+    { id: 2, itemName: "Caramelos", itemCantidad: 1 },
+    { id: 3, itemName: "Vitel Tone", itemCantidad: 1 },
   ]);
 
   const [name, setName] = useState("");
+  const [cantidad, setCantidad] = useState("");
   const enable = name.length > 0;
   const [error, setError] = useState(null);
 
@@ -18,12 +19,15 @@ const Home = () => {
     setName(event.target.value.trim()); //Trim evita que se pueda agregar un regalo en blanco
   };
 
+  const handleCantidad = (event) => {
+    setCantidad(event.target.value);
+  };
+
   const handleAdd = () => {
     const existingItem = items.find(
       (item) => item.itemName.toLowerCase() === name.toLowerCase()
     );
     if (existingItem) {
-      console.log("alalal");
       setError("¡Este regalo ya esta en la lista!");
       return;
     }
@@ -31,12 +35,14 @@ const Home = () => {
     const newItem = {
       id: items.length + 1,
       itemName: name,
+      itemCantidad: cantidad,
     };
 
     const newItems = [...items, newItem];
 
     setItems(newItems);
     setName("");
+    setCantidad(1);
     setError(null);
   };
 
@@ -48,6 +54,7 @@ const Home = () => {
   const deleteAll = () => {
     setItems([]);
     setName("");
+    setCantidad(1);
     setError(null);
   };
 
@@ -56,11 +63,21 @@ const Home = () => {
       <div className="titulo">
         <h1>Regalos:</h1>
       </div>
-      <div>
+      <div className="inputs-container">
         <input
+          className="input-regalo"
           value={name}
           onChange={handleChange}
+          maxlength="15"
           placeholder="Agregá un item..."
+        />
+        <input
+          className="input-cantidad"
+          type="number"
+          min="1"
+          max="99"
+          value={cantidad}
+          onChange={handleCantidad}
         />
         <button
           disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
@@ -78,7 +95,9 @@ const Home = () => {
           <ul>
             {items.map((item) => (
               <div class="container-lista">
-                <li key={item.id}>{item.itemName}</li>
+                <li key={item.id}>
+                  {item.itemName} {item.itemCantidad}
+                </li>
                 <div className="icon">
                   <FontAwesomeIcon
                     icon={faXmark}
@@ -101,7 +120,7 @@ const Home = () => {
           class="btn btn-danger btn-block delete-button"
           onClick={deleteAll}
         >
-          Borar todo
+          Borrar todo
         </button>
       </div>
     </div>
