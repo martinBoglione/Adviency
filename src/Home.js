@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
-  const [items, setItems] = useState([
-    { id: 1, itemName: "Media", itemCantidad: 1 },
-    { id: 2, itemName: "Caramelos", itemCantidad: 1 },
-    { id: 3, itemName: "Vitel Tone", itemCantidad: 1 },
-  ]);
+  const [items, setItems] = useState(() => {
+    //Lista de regalos
+    //Empieza Local Storage ------------------------------------------//
+    // Recupera el valor guardado
+    const saved = localStorage.getItem("gifts");
+    const initialValue = JSON.parse(saved);
+    return initialValue || "";
+  });
 
-  const [name, setName] = useState("");
-  const [cantidad, setCantidad] = useState("");
-  const enable = name.length > 0;
+  // Recupera los items de la localStorage al cargar la página
+  useEffect(() => {
+    const storedItems = localStorage.getItem("gifts");
+    if (storedItems) {
+      setItems(JSON.parse(storedItems));
+    }
+  }, []); // <-- esto es el segundo argumento de dependencia
+
+  // Actualiza la localStorage cuando se modifica la lista de items
+  useEffect(() => {
+    localStorage.setItem("gifts", JSON.stringify(items));
+  }, [items]);
+
+  // Termina Local Storage ------------------------------------------//
+
+  const [name, setName] = useState(""); //Nombre del regalo
+  const [cantidad, setCantidad] = useState("1"); //Cantidad de regalos
+  const enable = name.length > 0; //Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
   const [error, setError] = useState(null);
 
   const handleChange = (event) => {
@@ -24,6 +42,7 @@ const Home = () => {
   };
 
   const handleAdd = () => {
+    //Si un regalo ya existe aparece el error, como se esta usando toLowerCase los regalos son case sensitive
     const existingItem = items.find(
       (item) => item.itemName.toLowerCase() === name.toLowerCase()
     );
@@ -68,7 +87,7 @@ const Home = () => {
           className="input-regalo"
           value={name}
           onChange={handleChange}
-          maxlength="15"
+          maxLength="15"
           placeholder="Agregá un item..."
         />
         <input
@@ -81,7 +100,7 @@ const Home = () => {
         />
         <button
           disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
-          class="btn btn-success btn-sm button add-button"
+          className="btn btn-success btn-sm button add-button"
           onClick={handleAdd}
         >
           Agregar
@@ -94,7 +113,7 @@ const Home = () => {
         ) : (
           <ul>
             {items.map((item) => (
-              <div class="container-lista">
+              <div className="container-lista">
                 <li key={item.id}>
                   {item.itemName} {item.itemCantidad}
                 </li>
@@ -117,7 +136,7 @@ const Home = () => {
 
       <div>
         <button
-          class="btn btn-danger btn-block delete-button"
+          className="btn btn-danger btn-block delete-button"
           onClick={deleteAll}
         >
           Borrar todo
