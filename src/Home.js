@@ -6,7 +6,8 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 const Home = () => {
   const [items, setItems] = useState(() => {
     //Lista de regalos
-    //Empieza Local Storage ------------------------------------------//
+
+    //------------------------------Empieza Local Storage ------------------------------------------//
     // Recupera el valor guardado
     const saved = localStorage.getItem("gifts");
     const initialValue = JSON.parse(saved);
@@ -26,15 +27,20 @@ const Home = () => {
     localStorage.setItem("gifts", JSON.stringify(items));
   }, [items]);
 
-  // Termina Local Storage ------------------------------------------//
+  //------------------------------ Termina Local Storage ------------------------------------------//
 
-  const [name, setName] = useState(""); //Nombre del regalo
-  const [cantidad, setCantidad] = useState("1"); //Cantidad de regalos
-  const enable = name.length > 0; //Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
+  const [name, setName] = useState(""); // Nombre del regalo
+  const [cantidad, setCantidad] = useState("1"); // Cantidad de regalos
+  const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
   const [error, setError] = useState(null);
+  const [imagen, setImagen] = useState("");
+
+  const handleImagen = (event) => {
+    setImagen(event.target.value);
+  };
 
   const handleChange = (event) => {
-    setName(event.target.value.trim()); //Trim evita que se pueda agregar un regalo en blanco
+    setName(event.target.value.trim()); // Trim evita que se pueda agregar un regalo en blanco
   };
 
   const handleCantidad = (event) => {
@@ -55,6 +61,7 @@ const Home = () => {
       id: items.length + 1,
       itemName: name,
       itemCantidad: cantidad,
+      itemImagen: imagen,
     };
 
     const newItems = [...items, newItem];
@@ -63,6 +70,7 @@ const Home = () => {
     setName("");
     setCantidad(1);
     setError(null);
+    setImagen("");
   };
 
   const handleDelete = (id) => {
@@ -75,6 +83,7 @@ const Home = () => {
     setName("");
     setCantidad(1);
     setError(null);
+    setImagen("");
   };
 
   return (
@@ -84,20 +93,30 @@ const Home = () => {
       </div>
       <div className="inputs-container">
         <input
-          className="input-regalo"
+          className="input"
+          maxLength="15"
+          placeholder="Medias"
           value={name}
           onChange={handleChange}
-          maxLength="15"
-          placeholder="Agregá un item..."
         />
         <input
-          className="input-cantidad"
+          className="input"
+          // multiple
+          // accept="image/*"
+          placeholder="http://image..."
+          value={imagen}
+          onChange={handleImagen}
+        />
+        <input
+          className="input"
+          id="input-cantidad"
           type="number"
           min="1"
           max="99"
           value={cantidad}
           onChange={handleCantidad}
         />
+
         <button
           disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
           className="btn btn-success btn-sm button add-button"
@@ -115,7 +134,14 @@ const Home = () => {
             {items.map((item) => (
               <div className="container-lista">
                 <li key={item.id}>
-                  {item.itemName} {item.itemCantidad}
+                  {/* <span>{item.itemImagen}</span> */}
+                  <img
+                    className="item-imagen"
+                    src={item.itemImagen}
+                    alt="imagen"
+                  />
+                  <span>{item.itemName}</span>
+                  <span>{item.itemCantidad}</span>
                 </li>
                 <div className="icon">
                   <FontAwesomeIcon

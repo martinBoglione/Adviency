@@ -6,7 +6,7 @@
   background-color: white;
   border: 3px solid green;
   padding: 10px;
-  min-width: 20em;
+  /* min-width: 20em; */
 }
 
 .center {
@@ -50,6 +50,8 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  margin: 1em 0em 1em;
 }
 
 .add-button {
@@ -78,13 +80,24 @@ html {
 .inputs-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
-.input-cantidad {
+.input {
+  width: 8em;
+  margin-right: 0.4em;
+}
+
+#input-cantidad {
   width: 3em;
 }
 
-.input-regalo {
-  width: 10em;
+li > span {
+  font-style: italic;
+  margin-right: 1em;
+}
+
+.item-imagen {
+  margin-right: 1em;
+  width: 70px;
+  height: 70px;
 }
