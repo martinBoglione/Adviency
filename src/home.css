@@ -6,7 +6,8 @@
   background-color: white;
   border: 3px solid green;
   padding: 10px;
-  /* min-width: 20em; */
+  width: 20em;
+  height: 20em;
 }
 
 .center {
@@ -34,6 +35,14 @@ html {
   text-align: center;
 }
 
+.container-lista {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 0em 1em;
+}
+
 .lista {
   padding-right: 1em;
 }
@@ -46,19 +55,8 @@ html {
   font-weight: 200;
 }
 
-.container-lista {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1em 0em 1em;
-}
-
-.add-button {
-  cursor: pointer;
-}
-
-.delete-button {
+.delete-button,
+.agregar-button {
   display: flex;
   width: 100%;
 }
@@ -79,16 +77,15 @@ html {
 
 .inputs-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .input {
-  width: 8em;
-  margin-right: 0.4em;
-}
-
-#input-cantidad {
-  width: 3em;
+  width: 13em;
+  height: 2.5em;
+  margin-bottom: 0.5em;
 }
 
 li > span {
@@ -100,4 +97,9 @@ li > span {
   margin-right: 1em;
   width: 70px;
   height: 70px;
+}
+
+#modal-footer {
+  display: flex;
+  justify-content: center;
 }

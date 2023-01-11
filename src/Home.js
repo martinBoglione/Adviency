@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { Modal, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
 
 const Home = () => {
   const [items, setItems] = useState(() => {
@@ -30,13 +32,22 @@ const Home = () => {
   //------------------------------ Termina Local Storage ------------------------------------------//
 
   const [name, setName] = useState(""); // Nombre del regalo
-  const [cantidad, setCantidad] = useState("1"); // Cantidad de regalos
+  const [cantidad, setCantidad] = useState(""); // Cantidad de regalos
   const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
   const [error, setError] = useState(null);
-  const [imagen, setImagen] = useState("");
+  const [imagen, setImagen] = useState(""); // Imagen del regalo
+  const [show, setShow] = useState(false); // Modal
+
+  const handleShow = () => {
+    setShow(true); // Mostrar modal
+  };
+
+  const handleClose = () => {
+    setShow(false); // Cerar modal
+  };
 
   const handleImagen = (event) => {
-    setImagen(event.target.value);
+    setImagen(event.target.value); // Podria hacer que si o si se tenga que insertar una imagen?
   };
 
   const handleChange = (event) => {
@@ -68,9 +79,10 @@ const Home = () => {
 
     setItems(newItems);
     setName("");
-    setCantidad(1);
+    setCantidad("");
     setError(null);
     setImagen("");
+    setShow(false);
   };
 
   const handleDelete = (id) => {
@@ -81,7 +93,7 @@ const Home = () => {
   const deleteAll = () => {
     setItems([]);
     setName("");
-    setCantidad(1);
+    setCantidad("");
     setError(null);
     setImagen("");
   };
@@ -91,40 +103,63 @@ const Home = () => {
       <div className="titulo">
         <h1>Regalos:</h1>
       </div>
-      <div className="inputs-container">
-        <input
-          className="input"
-          maxLength="15"
-          placeholder="Medias"
-          value={name}
-          onChange={handleChange}
-        />
-        <input
-          className="input"
-          // multiple
-          // accept="image/*"
-          placeholder="http://image..."
-          value={imagen}
-          onChange={handleImagen}
-        />
-        <input
-          className="input"
-          id="input-cantidad"
-          type="number"
-          min="1"
-          max="99"
-          value={cantidad}
-          onChange={handleCantidad}
-        />
-
-        <button
-          disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
-          className="btn btn-success btn-sm button add-button"
-          onClick={handleAdd}
-        >
-          Agregar
+      <div>
+        <button className="btn btn-success agregar-button" onClick={handleShow}>
+          Agregar regalo
         </button>
+        <Modal class="modal-sm modal-dialog" show={show}>
+          <Modal.Body>
+            <>
+              <div className="inputs-container">
+                <input
+                  className="input"
+                  maxLength="15"
+                  placeholder="Medias"
+                  value={name}
+                  onChange={handleChange}
+                />
+                <input
+                  className="input"
+                  placeholder="http://image..."
+                  value={imagen}
+                  onChange={handleImagen}
+                />
+                <input
+                  className="input"
+                  type="number"
+                  placeholder="2"
+                  min="1"
+                  max="99"
+                  value={cantidad}
+                  onChange={handleCantidad}
+                />
+              </div>
+              {/* Mensaje de error si un regalo ya existe */}
+              <div className="error">
+                <p>{error}</p>
+              </div>
+            </>
+          </Modal.Body>
+
+          <Modal.Footer id="modal-footer">
+            <Button
+              disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
+              className="btn btn-success button"
+              onClick={handleAdd}
+            >
+              Agregar
+            </Button>
+            <Button
+              className="btn btn-danger"
+              variant="secondary"
+              onClick={handleClose}
+            >
+              Cerrar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
+
       <div className="lista">
         {/* Si la lista de items es igual a cero entonces aparece el siguente mensaje */}
         {items.length === 0 ? (
@@ -134,7 +169,6 @@ const Home = () => {
             {items.map((item) => (
               <div className="container-lista">
                 <li key={item.id}>
-                  {/* <span>{item.itemImagen}</span> */}
                   <img
                     className="item-imagen"
                     src={item.itemImagen}
@@ -154,10 +188,6 @@ const Home = () => {
             ))}
           </ul>
         )}
-      </div>
-      {/* Mensaje de error si un regalo ya existe */}
-      <div className="error">
-        <p>{error}</p>
       </div>
 
       <div>
