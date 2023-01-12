@@ -32,9 +32,10 @@ const Home = () => {
   //------------------------------ Termina Local Storage ------------------------------------------//
 
   const [name, setName] = useState(""); // Nombre del regalo
+  const [destinatario, setDestinatario] = useState(""); // Persona a recibir el regalo
   const [cantidad, setCantidad] = useState(""); // Cantidad de regalos
   const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // Error al poner dos veces el mismo regalo
   const [imagen, setImagen] = useState(""); // Imagen del regalo
   const [show, setShow] = useState(false); // Modal
 
@@ -44,6 +45,10 @@ const Home = () => {
 
   const handleClose = () => {
     setShow(false); // Cerar modal
+  };
+
+  const handleDestinatario = (event) => {
+    setDestinatario(event.target.value);
   };
 
   const handleImagen = (event) => {
@@ -73,6 +78,7 @@ const Home = () => {
       itemName: name,
       itemCantidad: cantidad,
       itemImagen: imagen,
+      itemDestinatario: destinatario,
     };
 
     const newItems = [...items, newItem];
@@ -83,6 +89,7 @@ const Home = () => {
     setError(null);
     setImagen("");
     setShow(false);
+    setDestinatario("");
   };
 
   const handleDelete = (id) => {
@@ -92,10 +99,12 @@ const Home = () => {
 
   const deleteAll = () => {
     setItems([]);
+    //El deleteAll deberia borrar los campos tambien?
     setName("");
     setCantidad("");
     setError(null);
     setImagen("");
+    setDestinatario("");
   };
 
   return (
@@ -117,6 +126,13 @@ const Home = () => {
                   placeholder="Medias"
                   value={name}
                   onChange={handleChange}
+                />
+                <input
+                  className="input"
+                  maxLength="15"
+                  placeholder="Lucas"
+                  value={destinatario}
+                  onChange={handleDestinatario}
                 />
                 <input
                   className="input"
@@ -168,15 +184,20 @@ const Home = () => {
           <ul>
             {items.map((item) => (
               <div className="container-lista">
-                <li key={item.id}>
+                <li key={item.id} className="elemento-lista">
                   <img
                     className="item-imagen"
                     src={item.itemImagen}
                     alt="imagen"
                   />
-                  <span>{item.itemName}</span>
-                  <span>{item.itemCantidad}</span>
+                  <div className="item-name-y-destinatario">
+                    <span>{item.itemName}</span>
+                    <span>{item.itemDestinatario}</span>
+                  </div>
                 </li>
+                <div className="item-cantidad">
+                  <span>{item.itemCantidad}</span>
+                </div>
                 <div className="icon">
                   <FontAwesomeIcon
                     icon={faXmark}

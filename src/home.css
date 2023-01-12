@@ -6,14 +6,14 @@
   background-color: white;
   border: 3px solid green;
   padding: 10px;
-  width: 20em;
-  height: 20em;
+  min-width: 20em;
+  min-height: 20em;
 }
 
 .center {
   margin: 0;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -30,49 +30,11 @@ html {
   background-size: cover;
 }
 
-.titulo {
-  font-family: myFirstFont;
-  text-align: center;
-}
+/* -----------------------Modal----------------------- */
 
-.container-lista {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 1em 0em 1em;
-}
-
-.lista {
-  padding-right: 1em;
-}
-
-.lista p {
+#modal-footer {
   display: flex;
   justify-content: center;
-  color: rgb(99, 97, 97);
-  font-style: italic;
-  font-weight: 200;
-}
-
-.delete-button,
-.agregar-button {
-  display: flex;
-  width: 100%;
-}
-
-.icon {
-  cursor: pointer;
-}
-
-.error {
-  display: flex;
-  justify-content: center;
-}
-
-.error p {
-  font-weight: bold;
-  color: red;
 }
 
 .inputs-container {
@@ -88,18 +50,86 @@ html {
   margin-bottom: 0.5em;
 }
 
-li > span {
-  font-style: italic;
-  margin-right: 1em;
+.error {
+  display: flex;
+  justify-content: center;
 }
 
+.error p {
+  font-weight: bold;
+  color: red;
+}
+
+/* -----------------------Modal----------------------- */
+
+/* -----------------------Lista----------------------- */
+.titulo {
+  font-family: myFirstFont;
+  text-align: center;
+}
+
+.container-lista {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 0em 1em;
+}
+
+.elemento-lista {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.lista {
+  padding-right: 1em;
+}
+
+.lista p {
+  display: flex;
+  justify-content: center;
+  color: rgb(99, 97, 97);
+  font-style: italic;
+  font-weight: 200;
+}
+/* -----------------------Lista----------------------- */
+
+.delete-button,
+.agregar-button {
+  display: flex;
+  width: 100%;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+/* -----------------------Items lista----------------------- */
 .item-imagen {
   margin-right: 1em;
   width: 70px;
   height: 70px;
 }
 
-#modal-footer {
+.item-name-y-destinatario {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
+
+.item-name-y-destinatario :first-child {
+  font-weight: bold;
+}
+
+.item-name-y-destinatario :last-child {
+  font-weight: 100;
+  font-style: italic;
+  color: rgb(188, 188, 184);
+}
+
+.item-cantidad {
+  font-weight: bold;
+  font-size: larger;
+}
+/* -----------------------Items lista----------------------- */
