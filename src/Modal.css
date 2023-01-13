@@ -1,0 +1,27 @@
+#modal-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.inputs-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input {
+  width: 13em;
+  height: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+}
+
+.error p {
+  font-weight: bold;
+  color: red;
+}

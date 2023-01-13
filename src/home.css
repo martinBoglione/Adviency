@@ -30,43 +30,11 @@ html {
   background-size: cover;
 }
 
-/* -----------------------Modal----------------------- */
-
-#modal-footer {
-  display: flex;
-  justify-content: center;
-}
-
-.inputs-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.input {
-  width: 13em;
-  height: 2.5em;
-  margin-bottom: 0.5em;
-}
-
-.error {
-  display: flex;
-  justify-content: center;
-}
-
-.error p {
-  font-weight: bold;
-  color: red;
-}
-
-/* -----------------------Modal----------------------- */
-
-/* -----------------------Lista----------------------- */
 .titulo {
   font-family: myFirstFont;
   text-align: center;
 }
+/* -----------------------Lista----------------------- */
 
 .container-lista {
   display: flex;
@@ -93,7 +61,7 @@ html {
   font-style: italic;
   font-weight: 200;
 }
-/* -----------------------Lista----------------------- */
+/* -----------------------End Lista----------------------- */
 
 .delete-button,
 .agregar-button {
@@ -102,7 +70,12 @@ html {
 }
 
 .icon {
+  display: flex;
   cursor: pointer;
+}
+
+.icon-edit {
+  margin-right: 1em;
 }
 
 /* -----------------------Items lista----------------------- */
@@ -132,4 +105,4 @@ html {
   font-weight: bold;
   font-size: larger;
 }
-/* -----------------------Items lista----------------------- */
+/* -----------------------End Items lista----------------------- */

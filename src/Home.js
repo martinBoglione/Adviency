@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
+import "./home.css";
+import "./Modal.css";
+import EditModal from "./EditModal.js";
 
 const Home = () => {
   const [items, setItems] = useState(() => {
-    //Lista de regalos
-
     //------------------------------Empieza Local Storage ------------------------------------------//
     // Recupera el valor guardado
     const saved = localStorage.getItem("gifts");
@@ -46,6 +45,47 @@ const Home = () => {
   const handleClose = () => {
     setShow(false); // Cerar modal
   };
+
+  //------------------------------ Edit Modal ------------------------------------------//
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const handleEdit = (item) => {
+    setSelectedItem(item);
+    setShowEditModal(true);
+  };
+
+  const handleCloseEdit = () => {
+    setShowEditModal(false);
+  };
+
+  const handleEditChange = (event, field) => {
+    setSelectedItem({
+      ...selectedItem,
+      [field]: event.target.value,
+    });
+  };
+
+  const handleSaveEdit = () => {
+    //Encuentra el index del item seleccionado en el array
+    const index = items.findIndex((item) => item.id === selectedItem.id);
+
+    // Crea una nueva array con el item updateado(?)
+    const updatedItems = [
+      ...items.slice(0, index),
+      selectedItem,
+      ...items.slice(index + 1),
+    ];
+
+    // Actualiza el state con el nuevo array
+    setItems(updatedItems);
+
+    // Actualiza la local storage
+    localStorage.setItem("gifts", JSON.stringify(updatedItems));
+
+    setShowEditModal(false);
+  };
+  //------------------------------ End Edit Modal ------------------------------------------//
 
   const handleDestinatario = (event) => {
     setDestinatario(event.target.value);
@@ -116,6 +156,13 @@ const Home = () => {
         <button className="btn btn-success agregar-button" onClick={handleShow}>
           Agregar regalo
         </button>
+        <EditModal
+          show={showEditModal}
+          handleClose={handleCloseEdit}
+          selectedItem={selectedItem}
+          handleEditChange={handleEditChange}
+          handleSaveEdit={handleSaveEdit}
+        />
         <Modal class="modal-sm modal-dialog" show={show}>
           <Modal.Body>
             <>
@@ -165,11 +212,7 @@ const Home = () => {
             >
               Agregar
             </Button>
-            <Button
-              className="btn btn-danger"
-              variant="secondary"
-              onClick={handleClose}
-            >
+            <Button className="btn btn-danger" onClick={handleClose}>
               Cerrar
             </Button>
           </Modal.Footer>
@@ -183,8 +226,8 @@ const Home = () => {
         ) : (
           <ul>
             {items.map((item) => (
-              <div className="container-lista">
-                <li key={item.id} className="elemento-lista">
+              <div className="container-lista" key={item.id}>
+                <li className="elemento-lista">
                   <img
                     className="item-imagen"
                     src={item.itemImagen}
@@ -199,6 +242,13 @@ const Home = () => {
                   <span>{item.itemCantidad}</span>
                 </div>
                 <div className="icon">
+                  <FontAwesomeIcon
+                    className="icon-edit"
+                    icon={faEdit}
+                    color="green"
+                    fontSize="14px"
+                    onClick={() => handleEdit(item)}
+                  />
                   <FontAwesomeIcon
                     icon={faXmark}
                     color="red"
