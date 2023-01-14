@@ -5,6 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 import "./home.css";
 import "./Modal.css";
 import EditModal from "./EditModal.js";
+document.getElementsByTagName("div")[0].focus();
 
 const Home = () => {
   const [items, setItems] = useState(() => {
@@ -153,7 +154,11 @@ const Home = () => {
         <h1>Regalos:</h1>
       </div>
       <div>
-        <button className="btn btn-success agregar-button" onClick={handleShow}>
+        <button
+          tabindex="1"
+          className="btn btn-success agregar-button"
+          onClick={handleShow}
+        >
           Agregar regalo
         </button>
         <EditModal
@@ -243,13 +248,27 @@ const Home = () => {
                 </div>
                 <div className="icon">
                   <FontAwesomeIcon
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleEdit(item);
+                      }
+                    }}
+                    tabindex="3"
                     className="icon-edit"
                     icon={faEdit}
                     color="green"
                     fontSize="14px"
                     onClick={() => handleEdit(item)}
                   />
+
                   <FontAwesomeIcon
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleDelete(item.id);
+                      }
+                    }}
+                    className="pe-auto"
+                    tabindex="4"
                     icon={faXmark}
                     color="red"
                     onClick={() => handleDelete(item.id)}
@@ -263,6 +282,7 @@ const Home = () => {
 
       <div>
         <button
+          tabindex="2"
           className="btn btn-danger btn-block delete-button"
           onClick={deleteAll}
         >
