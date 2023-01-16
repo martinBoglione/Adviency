@@ -34,7 +34,7 @@ const Home = () => {
   const [name, setName] = useState(""); // Nombre del regalo
   const [destinatario, setDestinatario] = useState(""); // Persona a recibir el regalo
   const [cantidad, setCantidad] = useState(""); // Cantidad de regalos
-  const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar quedasabilitado
+  const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar queda desabilitado
   const [error, setError] = useState(null); // Error al poner dos veces el mismo regalo
   const [imagen, setImagen] = useState(""); // Imagen del regalo
   const [show, setShow] = useState(false); // Modal
@@ -46,6 +46,29 @@ const Home = () => {
   const handleClose = () => {
     setShow(false); // Cerar modal
   };
+  //------------------------------ API  ------------------------------------------//
+  // En el caso de tener una API esto podria usarsa para traer la lista de regalos
+  const [loading, setLoading] = useState(true);
+  const [errorAPI, setErrorAPI] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("https://mi-api-url.com/regalos");
+        const data = await response.json();
+        setItems(data);
+        setLoading(false);
+      } catch (error) {
+        setErrorAPI(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  //------------------------------ End API  ------------------------------------------//
 
   //------------------------------ Edit Modal ------------------------------------------//
   const [selectedItem, setSelectedItem] = useState(null);
@@ -225,7 +248,11 @@ const Home = () => {
       </div>
 
       <div className="lista">
-        {/* Si la lista de items es igual a cero entonces aparece el siguente mensaje */}
+        {/* 
+        Mientras está cargando o hubo un error con la API podria mostrar esto
+        {loading && <p>Loading...</p>}
+        {errorAPI && <p>Error...</p>} 
+        */}
         {items.length === 0 ? (
           <p>¡No hay regalos, Grinch!</p>
         ) : (
