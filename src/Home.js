@@ -38,6 +38,24 @@ const Home = () => {
   const [error, setError] = useState(null); // Error al poner dos veces el mismo regalo
   const [imagen, setImagen] = useState(""); // Imagen del regalo
   const [show, setShow] = useState(false); // Modal
+  const regalosSorpresa = [
+    "Medias",
+    "Pantalon",
+    "Boxer",
+    "Play 5",
+    "Notebook",
+    "Camiseta",
+    "Pelota",
+    "Perro",
+    "Mouse",
+    "Monitor",
+  ];
+
+  const handleSorpresa = () => {
+    const numberRandom = Math.floor(Math.random() * regalosSorpresa.length);
+    const regalo = regalosSorpresa[numberRandom];
+    setName(regalo);
+  };
 
   const handleShow = () => {
     setShow(true); // Mostrar modal
@@ -195,13 +213,17 @@ const Home = () => {
           <Modal.Body>
             <>
               <div className="inputs-container">
-                <input
-                  className="input"
-                  maxLength="15"
-                  placeholder="Medias"
-                  value={name}
-                  onChange={handleChange}
-                />
+                <div className="container-input-y-button">
+                  <input
+                    className="input-con-button"
+                    maxLength="15"
+                    placeholder="Medias"
+                    value={name}
+                    onChange={handleChange}
+                  />
+                  <Button onClick={handleSorpresa}>Sorprendeme!</Button>
+                </div>
+
                 <input
                   className="input"
                   maxLength="15"

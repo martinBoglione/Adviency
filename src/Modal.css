@@ -11,9 +11,21 @@
 }
 
 .input {
-  width: 13em;
+  width: 19em;
   height: 2.5em;
   margin-bottom: 0.5em;
+}
+
+.container-input-y-button {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 0.5em;
+}
+
+.input-con-button {
+  width: 10.6em;
+  margin-right: 0.5em;
 }
 
 .error {
