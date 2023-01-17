@@ -51,6 +51,7 @@ html {
 }
 
 .lista {
+  padding-left: 1em;
   padding-right: 1em;
 }
 
@@ -67,8 +68,12 @@ html {
 .agregar-button {
   display: flex;
   width: 100%;
+  color: white;
 }
-
+.btn-warning {
+  color: white !important;
+  background-color: #eabf3d !important;
+}
 .icon {
   display: flex;
   cursor: pointer;
@@ -85,24 +90,19 @@ html {
   height: 70px;
 }
 
-.item-name-y-destinatario {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.items > span {
+  margin-right: 0.3em;
+  font-weight: 600;
 }
 
-.item-name-y-destinatario :first-child {
-  font-weight: bold;
-}
-
-.item-name-y-destinatario :last-child {
+.item-destinatario {
+  font-size: small;
   font-weight: 100;
   font-style: italic;
   color: rgb(188, 188, 184);
 }
 
-.item-cantidad {
-  font-weight: bold;
-  font-size: larger;
+ul {
+  padding-left: 0 !important;
 }
 /* -----------------------End Items lista----------------------- */

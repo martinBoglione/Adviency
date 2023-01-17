@@ -38,6 +38,7 @@ const Home = () => {
   const [error, setError] = useState(null); // Error al poner dos veces el mismo regalo
   const [imagen, setImagen] = useState(""); // Imagen del regalo
   const [show, setShow] = useState(false); // Modal
+  const [precio, setPrecio] = useState("");
   const regalosSorpresa = [
     "Medias",
     "Pantalon",
@@ -51,40 +52,27 @@ const Home = () => {
     "Monitor",
   ];
 
-  const handleSorpresa = () => {
-    const numberRandom = Math.floor(Math.random() * regalosSorpresa.length);
-    const regalo = regalosSorpresa[numberRandom];
-    setName(regalo);
-  };
-
-  const handleShow = () => {
-    setShow(true); // Mostrar modal
-  };
-
-  const handleClose = () => {
-    setShow(false); // Cerar modal
-  };
   //------------------------------ API  ------------------------------------------//
   // En el caso de tener una API esto podria usarsa para traer la lista de regalos
-  const [loading, setLoading] = useState(true);
-  const [errorAPI, setErrorAPI] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  // const [errorAPI, setErrorAPI] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch("https://mi-api-url.com/regalos");
-        const data = await response.json();
-        setItems(data);
-        setLoading(false);
-      } catch (error) {
-        setErrorAPI(error);
-        setLoading(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const response = await fetch("https://mi-api-url.com/regalos");
+  //       const data = await response.json();
+  //       setItems(data);
+  //       setLoading(false);
+  //     } catch (error) {
+  //       setErrorAPI(error);
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   //------------------------------ End API  ------------------------------------------//
 
@@ -112,6 +100,8 @@ const Home = () => {
     //Encuentra el index del item seleccionado en el array
     const index = items.findIndex((item) => item.id === selectedItem.id);
 
+    // items[index].itemPrecio =
+    //   items[index].itemPrecio * items[index].itemCantidad;
     // Crea una nueva array con el item updateado(?)
     const updatedItems = [
       ...items.slice(0, index),
@@ -119,6 +109,8 @@ const Home = () => {
       ...items.slice(index + 1),
     ];
 
+    // Al editar el item el itemPrecio no se actualiza
+    // updatedItems[index].itemPrecio = updatedItems[index].itemPrecio * updatedItems[index].itemCantidad;
     // Actualiza el state con el nuevo array
     setItems(updatedItems);
 
@@ -145,6 +137,24 @@ const Home = () => {
     setCantidad(event.target.value);
   };
 
+  const handleSorpresa = () => {
+    const numberRandom = Math.floor(Math.random() * regalosSorpresa.length);
+    const regalo = regalosSorpresa[numberRandom];
+    setName(regalo);
+  };
+
+  const handleShow = () => {
+    setShow(true); // Mostrar modal
+  };
+
+  const handleClose = () => {
+    setShow(false); // Cerar modal
+  };
+
+  const handlePrecio = (event) => {
+    setPrecio(event.target.value);
+  };
+
   const handleAdd = () => {
     //Si un regalo ya existe aparece el error, como se esta usando toLowerCase los regalos son case sensitive
     const existingItem = items.find(
@@ -161,6 +171,7 @@ const Home = () => {
       itemCantidad: cantidad,
       itemImagen: imagen,
       itemDestinatario: destinatario,
+      itemPrecio: Number(precio) * Number(cantidad),
     };
 
     const newItems = [...items, newItem];
@@ -172,6 +183,7 @@ const Home = () => {
     setImagen("");
     setShow(false);
     setDestinatario("");
+    setPrecio("");
   };
 
   const handleDelete = (id) => {
@@ -187,6 +199,7 @@ const Home = () => {
     setError(null);
     setImagen("");
     setDestinatario("");
+    setPrecio("");
   };
 
   return (
@@ -196,7 +209,7 @@ const Home = () => {
       </div>
       <div>
         <button
-          tabindex="1"
+          tabIndex="1"
           className="btn btn-success agregar-button"
           onClick={handleShow}
         >
@@ -221,9 +234,18 @@ const Home = () => {
                     value={name}
                     onChange={handleChange}
                   />
-                  <Button onClick={handleSorpresa}>Sorprendeme!</Button>
+                  <Button className="btn btn-warning" onClick={handleSorpresa}>
+                    Sorprendeme!
+                  </Button>
                 </div>
-
+                <input
+                  className="input"
+                  type="number"
+                  placeholder="100"
+                  value={precio}
+                  min="1"
+                  onChange={handlePrecio}
+                />
                 <input
                   className="input"
                   maxLength="15"
@@ -287,14 +309,27 @@ const Home = () => {
                     src={item.itemImagen}
                     alt="imagen"
                   />
-                  <div className="item-name-y-destinatario">
-                    <span>{item.itemName}</span>
-                    <span>{item.itemDestinatario}</span>
+                  <div>
+                    <div className="items">
+                      <span>{item.itemName}</span>
+                      <span>
+                        {"("}
+                        {item.itemCantidad}
+                        {")"}
+                      </span>
+                      <span>{"-"}</span>
+                      <span>
+                        {"$"}
+                        {item.itemPrecio}
+                      </span>
+                    </div>
+
+                    <span className="item-destinatario">
+                      {item.itemDestinatario}
+                    </span>
                   </div>
                 </li>
-                <div className="item-cantidad">
-                  <span>{item.itemCantidad}</span>
-                </div>
+
                 <div className="icon">
                   <FontAwesomeIcon
                     onKeyPress={(e) => {
@@ -302,7 +337,7 @@ const Home = () => {
                         handleEdit(item);
                       }
                     }}
-                    tabindex="3"
+                    tabIndex="3"
                     className="icon-edit"
                     icon={faEdit}
                     color="green"
@@ -317,7 +352,7 @@ const Home = () => {
                       }
                     }}
                     className="pe-auto"
-                    tabindex="4"
+                    tabIndex="4"
                     icon={faXmark}
                     color="red"
                     onClick={() => handleDelete(item.id)}
@@ -331,7 +366,7 @@ const Home = () => {
 
       <div>
         <button
-          tabindex="2"
+          tabIndex="2"
           className="btn btn-danger btn-block delete-button"
           onClick={deleteAll}
         >

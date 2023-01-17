@@ -16,6 +16,12 @@
   margin-bottom: 0.5em;
 }
 
+/* Quita las flechas en los inputs de numero*/
+input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
 .container-input-y-button {
   display: flex;
   flex-direction: row;

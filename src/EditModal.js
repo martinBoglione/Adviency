@@ -17,7 +17,14 @@ const EditModal = (props) => {
             value={selectedItem ? selectedItem.itemName : ""}
             onChange={(event) => handleEditChange(event, "itemName")}
           />
-
+          <input
+            className="input"
+            type="number"
+            placeholder="100"
+            min="1"
+            value={selectedItem ? selectedItem.itemPrecio : ""}
+            onChange={(event) => handleEditChange(event, "itemPrecio")}
+          />
           <input
             className="input"
             type="text"
@@ -31,6 +38,7 @@ const EditModal = (props) => {
             type="text"
             value={selectedItem ? selectedItem.itemImagen : ""}
             onChange={(event) => handleEditChange(event, "itemImagen")}
+            onFocus={(event) => event.target.select()}
           />
 
           <input
