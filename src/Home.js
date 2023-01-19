@@ -34,11 +34,11 @@ const Home = () => {
   const [name, setName] = useState(""); // Nombre del regalo
   const [destinatario, setDestinatario] = useState(""); // Persona a recibir el regalo
   const [cantidad, setCantidad] = useState(""); // Cantidad de regalos
-  const enable = name.length > 0; // Si no se escribio nada en el input de name el boton de Agregar queda desabilitado
   const [error, setError] = useState(null); // Error al poner dos veces el mismo regalo
   const [imagen, setImagen] = useState(""); // Imagen del regalo
   const [show, setShow] = useState(false); // Modal
   const [precio, setPrecio] = useState("");
+  const enable = name.length > 0 && cantidad > 0 && precio > 0;
   const regalosSorpresa = [
     "Medias",
     "Pantalon",
@@ -134,7 +134,8 @@ const Home = () => {
   };
 
   const handleCantidad = (event) => {
-    setCantidad(event.target.value);
+    const cantidad = event.target.value;
+    setCantidad(cantidad < 1 ? 1 : cantidad);
   };
 
   const handleSorpresa = () => {
@@ -152,7 +153,8 @@ const Home = () => {
   };
 
   const handlePrecio = (event) => {
-    setPrecio(event.target.value);
+    const precio = event.target.value;
+    setPrecio(precio < 1 ? 1 : precio);
   };
 
   const handleAdd = () => {
