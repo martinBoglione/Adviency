@@ -191,8 +191,10 @@ const Home = () => {
   };
 
   const handleDelete = (id) => {
-    // Al borrar un elemento que no sea el ultimo se generan id duplicados
     const newList = items.filter((l) => l.id !== id);
+    newList.forEach((item, index) => {
+      item.id = index + 1;
+    });
     setItems(newList);
   };
 
