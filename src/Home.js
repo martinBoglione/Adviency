@@ -97,25 +97,23 @@ const Home = () => {
   };
 
   const handleSaveEdit = () => {
-    //Encuentra el index del item seleccionado en el array
-    const index = items.findIndex((item) => item.id === selectedItem.id);
-
-    // items[index].itemPrecio =
-    //   items[index].itemPrecio * items[index].itemCantidad;
-    // Crea una nueva array con el item updateado(?)
-    const updatedItems = [
-      ...items.slice(0, index),
-      selectedItem,
-      ...items.slice(index + 1),
-    ];
-
-    // Al editar el item el itemPrecio no se actualiza
-    // updatedItems[index].itemPrecio = updatedItems[index].itemPrecio * updatedItems[index].itemCantidad;
-    // Actualiza el state con el nuevo array
-    setItems(updatedItems);
+    const newItems = items.map((item) => {
+      if (item.id === selectedItem.id) {
+        return {
+          ...item,
+          itemName: selectedItem.itemName,
+          itemCantidad: selectedItem.itemCantidad,
+          itemPrecio: selectedItem.itemPrecio,
+          itemPrecioXCantidad:
+            selectedItem.itemPrecio * selectedItem.itemCantidad,
+        };
+      }
+      return item;
+    });
+    setItems(newItems);
 
     // Actualiza la local storage
-    localStorage.setItem("gifts", JSON.stringify(updatedItems));
+    localStorage.setItem("gifts", JSON.stringify(newItems));
 
     setShowEditModal(false);
   };
@@ -177,7 +175,8 @@ const Home = () => {
       itemCantidad: cantidad,
       itemImagen: imagen,
       itemDestinatario: destinatario,
-      itemPrecio: Number(precio) * Number(cantidad),
+      itemPrecio: precio,
+      itemPrecioXCantidad: Number(precio) * Number(cantidad),
     };
 
     const newItems = [...items, newItem];
@@ -215,7 +214,7 @@ const Home = () => {
     const copiaRegalos = items;
     let totalValor = 0;
     for (let i = 0; i < copiaRegalos.length; i++) {
-      totalValor = totalValor + Number(copiaRegalos[i].itemPrecio);
+      totalValor = totalValor + Number(copiaRegalos[i].itemPrecioXCantidad);
     }
     return totalValor;
   };
@@ -282,7 +281,6 @@ const Home = () => {
                   type="number"
                   placeholder="2"
                   min="1"
-                  max="99"
                   value={cantidad}
                   onChange={handleCantidad}
                 />
@@ -338,7 +336,7 @@ const Home = () => {
                       <span>{"-"}</span>
                       <span>
                         {"$"}
-                        {item.itemPrecio}
+                        {item.itemPrecioXCantidad}
                       </span>
                     </div>
 
