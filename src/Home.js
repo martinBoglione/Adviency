@@ -129,7 +129,7 @@ const Home = () => {
     setImagen(event.target.value); // Podria hacer que si o si se tenga que insertar una imagen?
   };
 
-  const handleChange = (event) => {
+  const handleName = (event) => {
     setName(event.target.value.trim()); // Trim evita que se pueda agregar un regalo en blanco
   };
 
@@ -157,11 +157,15 @@ const Home = () => {
 
   const handleAdd = () => {
     //Si un regalo ya existe aparece el error, como se esta usando toLowerCase los regalos son case sensitive
-    const existingItem = items.find(
+    const existeRegalo = items.find(
       (item) => item.itemName.toLowerCase() === name.toLowerCase()
     );
-    if (existingItem) {
-      setError("¡Este regalo ya esta en la lista!");
+    const existeDestinatario = items.find(
+      (item) =>
+        item.itemDestinatario.toLowerCase() === destinatario.toLowerCase()
+    );
+    if (existeRegalo && existeDestinatario) {
+      setError("¡Este regalo ya existe!");
       return;
     }
 
@@ -187,6 +191,7 @@ const Home = () => {
   };
 
   const handleDelete = (id) => {
+    // Al borrar un elemento que no sea el ultimo se generan id duplicados
     const newList = items.filter((l) => l.id !== id);
     setItems(newList);
   };
@@ -200,6 +205,15 @@ const Home = () => {
     setImagen("");
     setDestinatario("");
     setPrecio("");
+  };
+
+  const calcularTotalPrecios = () => {
+    const copiaRegalos = items;
+    let totalValor = 0;
+    for (let i = 0; i < copiaRegalos.length; i++) {
+      totalValor = totalValor + Number(copiaRegalos[i].itemPrecio);
+    }
+    return totalValor;
   };
 
   return (
@@ -232,7 +246,7 @@ const Home = () => {
                     maxLength="15"
                     placeholder="Medias"
                     value={name}
-                    onChange={handleChange}
+                    onChange={handleName}
                   />
                   <Button className="btn btn-warning" onClick={handleSorpresa}>
                     Sorprendeme!
@@ -365,6 +379,8 @@ const Home = () => {
       </div>
 
       <div>
+        <hr className="hr-rounded"></hr>
+        <div className="precio-total">Total: ${calcularTotalPrecios()}</div>
         <button
           tabIndex="2"
           className="btn btn-danger btn-block delete-button"

@@ -83,6 +83,18 @@ html {
   margin-right: 1em;
 }
 
+.hr-rounded {
+  border-top: 1px solid #9e9d9a;
+  border-radius: 5px;
+}
+
+.precio-total {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+  font-weight: bold;
+}
+
 /* -----------------------Items lista----------------------- */
 .item-imagen {
   margin-right: 1em;
