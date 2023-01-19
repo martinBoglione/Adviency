@@ -2,8 +2,8 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import "./Modal.css";
 
-const EditModal = (props) => {
-  const { show, handleClose, selectedItem, handleEditChange, handleSaveEdit } =
+const DuplicateModal = (props) => {
+  const { show, handleClose, selectedItem, handleDuplicate, handleEditChange } =
     props;
 
   return (
@@ -56,8 +56,8 @@ const EditModal = (props) => {
         </div>
       </Modal.Body>
       <Modal.Footer id="modal-footer">
-        <Button className="btn btn-success button" onClick={handleSaveEdit}>
-          Guardar
+        <Button className="btn btn-success button" onClick={handleDuplicate}>
+          Agregar
         </Button>
         <Button className="btn btn-danger" onClick={handleClose}>
           Cerrar
@@ -67,4 +67,4 @@ const EditModal = (props) => {
   );
 };
 
-export default EditModal;
+export default DuplicateModal;

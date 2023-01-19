@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faEdit, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
 import "./home.css";
 import "./Modal.css";
 import EditModal from "./EditModal.js";
+import DuplicateModal from "./DuplicateModal";
+
 document.getElementsByTagName("div")[0].focus();
 
 const Home = () => {
@@ -76,6 +78,36 @@ const Home = () => {
 
   //------------------------------ End API  ------------------------------------------//
 
+  //------------------------------ Duplicate Modal ------------------------------------------//
+  const [showDuplicateModal, setShowDuplicateModal] = useState(false);
+
+  const handleShowDuplicate = (item) => {
+    setSelectedItem(item);
+    setShowDuplicateModal(true);
+  };
+
+  const handleCloseDuplicate = () => {
+    setShowDuplicateModal(false);
+  };
+
+  const handleDuplicate = () => {
+    const newItem = {
+      id: items.length + 1,
+      itemName: selectedItem.itemName,
+      itemCantidad: selectedItem.itemCantidad,
+      itemImagen: selectedItem.itemImagen,
+      itemDestinatario: selectedItem.itemDestinatario,
+      itemPrecio: selectedItem.itemPrecio,
+      itemPrecioXCantidad:
+        Number(selectedItem.itemPrecio) * Number(selectedItem.itemCantidad),
+    };
+
+    const newItems = [...items, newItem];
+    setItems(newItems);
+    setShowDuplicateModal(false);
+  };
+  //------------------------------ Duplicate Modal ------------------------------------------//
+
   //------------------------------ Edit Modal ------------------------------------------//
   const [selectedItem, setSelectedItem] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -102,6 +134,8 @@ const Home = () => {
         return {
           ...item,
           itemName: selectedItem.itemName,
+          itemImagen: selectedItem.itemImagen,
+          itemDestinatario: selectedItem.itemDestinatario,
           itemCantidad: selectedItem.itemCantidad,
           itemPrecio: selectedItem.itemPrecio,
           itemPrecioXCantidad:
@@ -232,6 +266,13 @@ const Home = () => {
         >
           Agregar regalo
         </button>
+        <DuplicateModal
+          show={showDuplicateModal}
+          handleClose={handleCloseDuplicate}
+          selectedItem={selectedItem}
+          handleEditChange={handleEditChange}
+          handleDuplicate={handleDuplicate}
+        />
         <EditModal
           show={showEditModal}
           handleClose={handleCloseEdit}
@@ -359,8 +400,20 @@ const Home = () => {
                     color="green"
                     fontSize="14px"
                     onClick={() => handleEdit(item)}
+                  />{" "}
+                  <FontAwesomeIcon
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleShowDuplicate(item);
+                      }
+                    }}
+                    tabIndex="3"
+                    className="icon-edit"
+                    icon={faCopy}
+                    color="yellow"
+                    fontSize="14px"
+                    onClick={() => handleShowDuplicate(item)}
                   />
-
                   <FontAwesomeIcon
                     onKeyPress={(e) => {
                       if (e.key === "Enter") {
