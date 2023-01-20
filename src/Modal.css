@@ -43,3 +43,9 @@ input[type="number"] {
   font-weight: bold;
   color: red;
 }
+
+/* Prev Modal */
+.button-close {
+  display: flex;
+  width: 100%;
+}

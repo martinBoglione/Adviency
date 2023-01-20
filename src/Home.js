@@ -6,6 +6,7 @@ import "./home.css";
 import "./Modal.css";
 import EditModal from "./EditModal.js";
 import DuplicateModal from "./DuplicateModal";
+import PrevisualizarModal from "./PrevisualizarModal";
 
 document.getElementsByTagName("div")[0].focus();
 
@@ -77,7 +78,15 @@ const Home = () => {
   // }, []);
 
   //------------------------------ End API  ------------------------------------------//
+  const [showPrevModal, setShowPrevModal] = useState(false);
 
+  const handleShowPrev = () => {
+    setShowPrevModal(true);
+  };
+
+  const handleClosePrev = () => {
+    setShowPrevModal(false);
+  };
   //------------------------------ Duplicate Modal ------------------------------------------//
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
 
@@ -266,6 +275,11 @@ const Home = () => {
         >
           Agregar regalo
         </button>
+        <PrevisualizarModal
+          show={showPrevModal}
+          handleClose={handleClosePrev}
+          items={items}
+        />
         <DuplicateModal
           show={showDuplicateModal}
           handleClose={handleCloseDuplicate}
@@ -394,10 +408,10 @@ const Home = () => {
                         handleEdit(item);
                       }
                     }}
-                    tabIndex="3"
+                    tabIndex="4"
                     className="icon-edit"
                     icon={faEdit}
-                    color="green"
+                    color="black"
                     fontSize="14px"
                     onClick={() => handleEdit(item)}
                   />{" "}
@@ -407,10 +421,10 @@ const Home = () => {
                         handleShowDuplicate(item);
                       }
                     }}
-                    tabIndex="3"
+                    tabIndex="5"
                     className="icon-edit"
                     icon={faCopy}
-                    color="yellow"
+                    color="gold"
                     fontSize="14px"
                     onClick={() => handleShowDuplicate(item)}
                   />
@@ -421,7 +435,7 @@ const Home = () => {
                       }
                     }}
                     className="pe-auto"
-                    tabIndex="4"
+                    tabIndex="6"
                     icon={faXmark}
                     color="red"
                     onClick={() => handleDelete(item.id)}
@@ -442,6 +456,13 @@ const Home = () => {
           onClick={deleteAll}
         >
           Borrar todo
+        </button>
+        <button
+          tabIndex="3"
+          className="btn btn-outline-dark btn-block delete-button"
+          onClick={handleShowPrev}
+        >
+          Previsualizar
         </button>
       </div>
     </div>
