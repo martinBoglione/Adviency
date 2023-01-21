@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Modal, Button } from "react-bootstrap";
 import "./Modal.css";
 import "./home.css";
+import { useReactToPrint } from "react-to-print";
 
 const PrevModal = (props) => {
   const { show, handleClose, items } = props;
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: "Lista Compra",
+  });
   return (
     <Modal show={show} onHide={handleClose} class="modal-sm modal-dialog">
-      <div className="titulo">
-        <h1>Comprar:</h1>
-      </div>
       <Modal.Body>
-        <div className="inputs-container">
+        <div className="inputs-container" ref={componentRef}>
+          <div className="titulo">
+            <h1>Comprar:</h1>
+          </div>
           {items.length === 0 ? (
             <p>¡No hay regalos, Grinch!</p>
           ) : (
@@ -52,7 +58,11 @@ const PrevModal = (props) => {
         </div>
       </Modal.Body>
       <Modal.Footer id="modal-footer">
-        <Button className="btn btn-danger button-close" onClick={handleClose}>
+        <Button className="btn btn-dark" onClick={handlePrint}>
+          Imprimir
+        </Button>
+
+        <Button className="btn btn-danger" onClick={handleClose}>
           Cerrar
         </Button>
       </Modal.Footer>
