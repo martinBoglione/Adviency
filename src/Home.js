@@ -1,12 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faEdit, faCopy } from "@fortawesome/free-solid-svg-icons";
+import {
+  faXmark,
+  faEdit,
+  faCopy,
+  faVolumeMute,
+  faVolumeHigh,
+} from "@fortawesome/free-solid-svg-icons";
 import { Modal, Button } from "react-bootstrap";
 import "./home.css";
 import "./Modal.css";
 import EditModal from "./EditModal.js";
 import DuplicateModal from "./DuplicateModal";
 import PrevisualizarModal from "./PrevisualizarModal";
+import cancionNavidad from "./Sonido/cancionNavidad.mp3"; //Sound Effect from Pixabay
 
 document.getElementsByTagName("div")[0].focus();
 
@@ -42,6 +49,7 @@ const Home = () => {
   const [show, setShow] = useState(false); // Modal
   const [precio, setPrecio] = useState("");
   const enable = name.length > 0 && cantidad > 0 && precio > 0;
+
   const regalosSorpresa = [
     "Medias",
     "Pantalon",
@@ -78,6 +86,9 @@ const Home = () => {
   // }, []);
 
   //------------------------------ End API  ------------------------------------------//
+
+  //------------------------------ Prev Modal ------------------------------------------//
+
   const [showPrevModal, setShowPrevModal] = useState(false);
 
   const handleShowPrev = () => {
@@ -87,6 +98,9 @@ const Home = () => {
   const handleClosePrev = () => {
     setShowPrevModal(false);
   };
+
+  //------------------------------ Prev Modal ------------------------------------------//
+
   //------------------------------ Duplicate Modal ------------------------------------------//
   const [showDuplicateModal, setShowDuplicateModal] = useState(false);
 
@@ -262,10 +276,35 @@ const Home = () => {
     return totalValor;
   };
 
+  const [cancion, setCancion] = useState(new Audio(cancionNavidad));
+  const [isPlaying, setPlaying] = useState(false);
+  const [iconVolumen, setIconVolumen] = useState(faVolumeMute);
+
+  const playCancion = () => {
+    console.log("play");
+    setPlaying(true);
+    setIconVolumen(faVolumeHigh);
+    cancion.play();
+  };
+
+  const pauseCancion = () => {
+    console.log("pausa");
+    setPlaying(false);
+    setIconVolumen(faVolumeMute);
+    cancion.pause();
+  };
+
   return (
     <div className="style center">
-      <div className="titulo">
-        <h1>Regalos:</h1>
+      <div className="header">
+        <span className="titulo">Regalos:</span>
+        <FontAwesomeIcon
+          className="fa-xl"
+          tabIndex="7"
+          icon={iconVolumen}
+          color="red"
+          onClick={!isPlaying ? playCancion : pauseCancion}
+        ></FontAwesomeIcon>
       </div>
       <div>
         <button
@@ -411,7 +450,7 @@ const Home = () => {
                     tabIndex="4"
                     className="icon-edit"
                     icon={faEdit}
-                    color="black"
+                    color="green"
                     fontSize="14px"
                     onClick={() => handleEdit(item)}
                   />{" "}

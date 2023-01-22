@@ -30,9 +30,16 @@ html {
   background-size: cover;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
 .titulo {
+  font-size: 60px;
   font-family: myFirstFont;
-  text-align: center;
 }
 /* -----------------------Lista----------------------- */
 
