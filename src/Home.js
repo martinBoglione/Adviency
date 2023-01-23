@@ -14,6 +14,7 @@ import EditModal from "./EditModal.js";
 import DuplicateModal from "./DuplicateModal";
 import PrevisualizarModal from "./PrevisualizarModal";
 import cancionNavidad from "./Sonido/cancionNavidad.mp3"; //Sound Effect from Pixabay
+import Snowfall from "react-snowfall";
 
 document.getElementsByTagName("div")[0].focus();
 
@@ -295,216 +296,228 @@ const Home = () => {
   };
 
   return (
-    <div className="style center">
-      <div className="header">
-        <span className="titulo">Regalos:</span>
-        <FontAwesomeIcon
-          className="fa-xl"
-          tabIndex="7"
-          icon={iconVolumen}
-          color="red"
-          onClick={!isPlaying ? playCancion : pauseCancion}
-        ></FontAwesomeIcon>
+    <>
+      <div
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <Snowfall snowflakeCount={200} />
       </div>
-      <div>
-        <button
-          tabIndex="1"
-          className="btn btn-success agregar-button"
-          onClick={handleShow}
-        >
-          Agregar regalo
-        </button>
-        <PrevisualizarModal
-          show={showPrevModal}
-          handleClose={handleClosePrev}
-          items={items}
-        />
-        <DuplicateModal
-          show={showDuplicateModal}
-          handleClose={handleCloseDuplicate}
-          selectedItem={selectedItem}
-          handleEditChange={handleEditChange}
-          handleDuplicate={handleDuplicate}
-        />
-        <EditModal
-          show={showEditModal}
-          handleClose={handleCloseEdit}
-          selectedItem={selectedItem}
-          handleEditChange={handleEditChange}
-          handleSaveEdit={handleSaveEdit}
-        />
-        <Modal class="modal-sm modal-dialog" show={show}>
-          <Modal.Body>
-            <>
-              <div className="inputs-container">
-                <div className="container-input-y-button">
+      <div className="style center">
+        <div className="header">
+          <span className="titulo">Regalos:</span>
+          <FontAwesomeIcon
+            className="fa-xl"
+            tabIndex="7"
+            icon={iconVolumen}
+            color="red"
+            onClick={!isPlaying ? playCancion : pauseCancion}
+          ></FontAwesomeIcon>
+        </div>
+        <div>
+          <button
+            tabIndex="1"
+            className="btn btn-success agregar-button"
+            onClick={handleShow}
+          >
+            Agregar regalo
+          </button>
+          <PrevisualizarModal
+            show={showPrevModal}
+            handleClose={handleClosePrev}
+            items={items}
+          />
+          <DuplicateModal
+            show={showDuplicateModal}
+            handleClose={handleCloseDuplicate}
+            selectedItem={selectedItem}
+            handleEditChange={handleEditChange}
+            handleDuplicate={handleDuplicate}
+          />
+          <EditModal
+            show={showEditModal}
+            handleClose={handleCloseEdit}
+            selectedItem={selectedItem}
+            handleEditChange={handleEditChange}
+            handleSaveEdit={handleSaveEdit}
+          />
+          <Modal class="modal-sm modal-dialog" show={show}>
+            <Modal.Body>
+              <>
+                <div className="inputs-container">
+                  <div className="container-input-y-button">
+                    <input
+                      className="input-con-button"
+                      maxLength="15"
+                      placeholder="Medias"
+                      value={name}
+                      onChange={handleName}
+                    />
+                    <Button
+                      className="btn btn-warning"
+                      onClick={handleSorpresa}
+                    >
+                      Sorprendeme!
+                    </Button>
+                  </div>
                   <input
-                    className="input-con-button"
-                    maxLength="15"
-                    placeholder="Medias"
-                    value={name}
-                    onChange={handleName}
+                    className="input"
+                    type="number"
+                    placeholder="100"
+                    value={precio}
+                    min="1"
+                    onChange={handlePrecio}
                   />
-                  <Button className="btn btn-warning" onClick={handleSorpresa}>
-                    Sorprendeme!
-                  </Button>
+                  <input
+                    className="input"
+                    maxLength="15"
+                    placeholder="Lucas"
+                    value={destinatario}
+                    onChange={handleDestinatario}
+                  />
+                  <input
+                    className="input"
+                    placeholder="http://image..."
+                    value={imagen}
+                    onChange={handleImagen}
+                  />
+                  <input
+                    className="input"
+                    type="number"
+                    placeholder="2"
+                    min="1"
+                    value={cantidad}
+                    onChange={handleCantidad}
+                  />
                 </div>
-                <input
-                  className="input"
-                  type="number"
-                  placeholder="100"
-                  value={precio}
-                  min="1"
-                  onChange={handlePrecio}
-                />
-                <input
-                  className="input"
-                  maxLength="15"
-                  placeholder="Lucas"
-                  value={destinatario}
-                  onChange={handleDestinatario}
-                />
-                <input
-                  className="input"
-                  placeholder="http://image..."
-                  value={imagen}
-                  onChange={handleImagen}
-                />
-                <input
-                  className="input"
-                  type="number"
-                  placeholder="2"
-                  min="1"
-                  value={cantidad}
-                  onChange={handleCantidad}
-                />
-              </div>
-              {/* Mensaje de error si un regalo ya existe */}
-              <div className="error">
-                <p>{error}</p>
-              </div>
-            </>
-          </Modal.Body>
+                {/* Mensaje de error si un regalo ya existe */}
+                <div className="error">
+                  <p>{error}</p>
+                </div>
+              </>
+            </Modal.Body>
 
-          <Modal.Footer id="modal-footer">
-            <Button
-              disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
-              className="btn btn-success button"
-              onClick={handleAdd}
-            >
-              Agregar
-            </Button>
-            <Button className="btn btn-danger" onClick={handleClose}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-
-      <div className="lista">
-        {/* 
+            <Modal.Footer id="modal-footer">
+              <Button
+                disabled={!enable} //Si no hay nada escrito en el input el boton queda desabilitado
+                className="btn btn-success button"
+                onClick={handleAdd}
+              >
+                Agregar
+              </Button>
+              <Button className="btn btn-danger" onClick={handleClose}>
+                Cerrar
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
+        <div className="lista">
+          {/* 
         Mientras está cargando o hubo un error con la API podria mostrar esto
         {loading && <p>Loading...</p>}
         {errorAPI && <p>Error...</p>} 
         */}
-        {items.length === 0 ? (
-          <p>¡No hay regalos, Grinch!</p>
-        ) : (
-          <ul>
-            {items.map((item) => (
-              <div className="container-lista" key={item.id}>
-                <li className="elemento-lista">
-                  <img
-                    className="item-imagen"
-                    src={item.itemImagen}
-                    alt="imagen"
-                  />
-                  <div>
-                    <div className="items">
-                      <span>{item.itemName}</span>
-                      <span>
-                        {"("}
-                        {item.itemCantidad}
-                        {")"}
-                      </span>
-                      <span>{"-"}</span>
-                      <span>
-                        {"$"}
-                        {item.itemPrecioXCantidad}
+          {items.length === 0 ? (
+            <p>¡No hay regalos, Grinch!</p>
+          ) : (
+            <ul>
+              {items.map((item) => (
+                <div className="container-lista" key={item.id}>
+                  <li className="elemento-lista">
+                    <img
+                      className="item-imagen"
+                      src={item.itemImagen}
+                      alt="imagen"
+                    />
+                    <div>
+                      <div className="items">
+                        <span>{item.itemName}</span>
+                        <span>
+                          {"("}
+                          {item.itemCantidad}
+                          {")"}
+                        </span>
+                        <span>{"-"}</span>
+                        <span>
+                          {"$"}
+                          {item.itemPrecioXCantidad}
+                        </span>
+                      </div>
+
+                      <span className="item-destinatario">
+                        {item.itemDestinatario}
                       </span>
                     </div>
+                  </li>
 
-                    <span className="item-destinatario">
-                      {item.itemDestinatario}
-                    </span>
+                  <div className="icon">
+                    <FontAwesomeIcon
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleEdit(item);
+                        }
+                      }}
+                      tabIndex="4"
+                      className="icon-edit"
+                      icon={faEdit}
+                      color="green"
+                      fontSize="14px"
+                      onClick={() => handleEdit(item)}
+                    />{" "}
+                    <FontAwesomeIcon
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleShowDuplicate(item);
+                        }
+                      }}
+                      tabIndex="5"
+                      className="icon-edit"
+                      icon={faCopy}
+                      color="gold"
+                      fontSize="14px"
+                      onClick={() => handleShowDuplicate(item)}
+                    />
+                    <FontAwesomeIcon
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          handleDelete(item.id);
+                        }
+                      }}
+                      className="pe-auto"
+                      tabIndex="6"
+                      icon={faXmark}
+                      color="red"
+                      onClick={() => handleDelete(item.id)}
+                    ></FontAwesomeIcon>
                   </div>
-                </li>
-
-                <div className="icon">
-                  <FontAwesomeIcon
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        handleEdit(item);
-                      }
-                    }}
-                    tabIndex="4"
-                    className="icon-edit"
-                    icon={faEdit}
-                    color="green"
-                    fontSize="14px"
-                    onClick={() => handleEdit(item)}
-                  />{" "}
-                  <FontAwesomeIcon
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        handleShowDuplicate(item);
-                      }
-                    }}
-                    tabIndex="5"
-                    className="icon-edit"
-                    icon={faCopy}
-                    color="gold"
-                    fontSize="14px"
-                    onClick={() => handleShowDuplicate(item)}
-                  />
-                  <FontAwesomeIcon
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        handleDelete(item.id);
-                      }
-                    }}
-                    className="pe-auto"
-                    tabIndex="6"
-                    icon={faXmark}
-                    color="red"
-                    onClick={() => handleDelete(item.id)}
-                  ></FontAwesomeIcon>
                 </div>
-              </div>
-            ))}
-          </ul>
-        )}
+              ))}
+            </ul>
+          )}
+        </div>
+        <div>
+          <hr className="hr-rounded"></hr>
+          <div className="precio-total">Total: ${calcularTotalPrecios()}</div>
+          <button
+            tabIndex="2"
+            className="btn btn-danger btn-block delete-button"
+            onClick={deleteAll}
+          >
+            Borrar todo
+          </button>
+          <button
+            tabIndex="3"
+            className="btn btn-outline-dark btn-block delete-button"
+            onClick={handleShowPrev}
+          >
+            Previsualizar
+          </button>
+        </div>
       </div>
-
-      <div>
-        <hr className="hr-rounded"></hr>
-        <div className="precio-total">Total: ${calcularTotalPrecios()}</div>
-        <button
-          tabIndex="2"
-          className="btn btn-danger btn-block delete-button"
-          onClick={deleteAll}
-        >
-          Borrar todo
-        </button>
-        <button
-          tabIndex="3"
-          className="btn btn-outline-dark btn-block delete-button"
-          onClick={handleShowPrev}
-        >
-          Previsualizar
-        </button>
-      </div>
-    </div>
+    </>
   );
 };
 
